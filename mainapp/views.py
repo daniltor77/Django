@@ -7,7 +7,7 @@ from .models import Product, ProductCategory, Contact
 def main(request):
     title = "главная"
 
-    products = Product.objects.all()
+    products = Product.objects.all()[:4]
 
     content = {"title": title, "products": products, "media_url": settings.MEDIA_URL}
     return render(request, "mainapp/index.html", content)
@@ -33,5 +33,4 @@ def contact(request):
     visit_date = timezone.now()
     locations = Contact.objects.all()
     content = {"title": title, "visit_date": visit_date, "locations": locations}
-    
     return render(request, "mainapp/contact.html", content)

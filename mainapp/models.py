@@ -22,11 +22,10 @@ class Product(models.Model):
 
 
 class Contact(models.Model):
-    name=models.CharField(verbose_name="имя", max_length=64, unique=True)
-    phone=models.DecimalField(verbose_name="телефон", max_digits=12, decimal_places=0, default=0)
-    email=models.EmailField(verbose_name=("почта"), max_length=254)
-    address=models.CharField(verbose_name="адресс", max_length=128, unique=True)
-
+    phone = models.CharField(max_length=50, verbose_name="номер телефона")
+    email = models.EmailField(max_length=254, verbose_name="электронная почта")
+    city = models.CharField(max_length=128, default="Москва", verbose_name="город")
+    address = models.CharField(max_length=254, verbose_name="адресс")
 
     def __str__(self):
-        return self.name
+        return f"{self.pk} {self.email}"
