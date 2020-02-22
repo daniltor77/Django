@@ -1,5 +1,5 @@
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.conf import settings
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from basketapp.models import Basket
 from mainapp.models import Product
 
@@ -7,7 +7,11 @@ from mainapp.models import Product
 def basket(request):
     title= "Корзина"
     basket_items=Basket.objects.filter(user=request.user).order_by("product__category")
-    content = {"title": title, "basket_items": basket_items, "media_url": settings.MEDIA_URL}
+    content = {
+        "title": title, 
+        "basket_items": basket_items, 
+        "media_url": settings.MEDIA_URL,
+        }
     return render(request, "basketapp/basket.html", content)
 
 

@@ -12,7 +12,12 @@ def main(request):
 
     products = Product.objects.all()[:4]
 
-    content = {"title": title, "products": products, "media_url": settings.MEDIA_URL}
+    content = {
+        "title": title, 
+        "products": products, 
+        "media_url": settings.MEDIA_URL,
+        "basket":get_basket (request.user),
+        }
     return render(request, "mainapp/index.html", content)
 
 
@@ -34,7 +39,6 @@ def get_same_products(hot_product):
 def products(request, pk=None):
     title = "продукты"
     links_menu = ProductCategory.objects.all()
-    basket= get_basket (request.user)
 
     if pk is not None:
         if pk == 0:
@@ -49,7 +53,7 @@ def products(request, pk=None):
             "category": category,
             "products": products,
             "media_url": settings.MEDIA_URL,
-            "basket":basket,
+            "basket": get_basket (request.user)
         }
         return render(request, "mainapp/products_list.html", content)
     hot_product = get_hot_product()
@@ -59,6 +63,7 @@ def products(request, pk=None):
         "links_menu": links_menu,
         "same_products": same_products,
         "media_url": settings.MEDIA_URL,
+        "basket":get_basket (request.user),
         "hot_product": hot_product,
     }
     if pk:
@@ -66,9 +71,25 @@ def products(request, pk=None):
     return render(request, "mainapp/products.html", content)
 
 
+def product(request, pk):
+    title="продукты"
+    content={
+        "title": title,
+        "links_menu" :ProductCategory.objects.all(),
+        "products": get_object_or_404(Product, pk=pk),
+        "basket": get_basket(request.user),
+        "media_url": settings.MEDIA_URL,
+    }
+    return render(request, "mainapp/product.html", content)
+
 def contact(request):
     title = "о нас"
     visit_date = timezone.now()
     locations = Contact.objects.all()
-    content = {"title": title, "visit_date": visit_date, "locations": locations}
+    content = {
+    "title": title, 
+    "visit_date": visit_date, 
+    "locations": locations,
+    "basket":get_basket (request.user)
+    }
     return render(request, "mainapp/contact.html", content)
