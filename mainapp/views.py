@@ -76,7 +76,7 @@ def product(request, pk):
     content={
         "title": title,
         "links_menu" :ProductCategory.objects.all(),
-        "products": get_object_or_404(Product, pk=pk),
+        "product": get_object_or_404(Product, pk=pk),
         "basket": get_basket(request.user),
         "media_url": settings.MEDIA_URL,
     }
